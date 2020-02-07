@@ -6,7 +6,7 @@ from django.shortcuts import reverse
 
 class Categoria(models.Model):
     nome = models.CharField(max_length=200, blank=False, null=False)
-    descricao = models.CharField(max_length=200, blank=False, null=False, default= f'Venha conferir nossos produtos')
+    descricao = models.CharField(max_length=200, blank=False, null=False, default='Venha conferir nossos produtos')
 
     def get_absolute_url(self):
         return reverse('categoria-detail', args=[str(self.id)])
@@ -15,7 +15,8 @@ class Categoria(models.Model):
         return self.nome
 
 class SubCategoria(models.Model):
-    nome = models.CharField(max_length=200, blank=False, null=False, default='')
+    nome = models.CharField(max_length=200, blank=False, null=False)
+    descricao = models.CharField(max_length=200, blank=False, null=False, default='Dê uma olhada também')
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, blank=False, null=False)
 
     def get_absolute_url(self):
@@ -30,7 +31,8 @@ class Produto(models.Model):
     sub_categoria = models.ForeignKey(SubCategoria, on_delete=models.CASCADE, blank=True, null=True)
 
     promocao = models.BooleanField(blank=True, null=True, default=False)
-    desconto = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, default=0, validators=[MinValueValidator(limit_value=0)])
+    desconto = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, default=0,
+                                   validators=[MinValueValidator(limit_value=0)])
 
     def preco_promocao(self):
         return self.preco - self.desconto

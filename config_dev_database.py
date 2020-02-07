@@ -83,8 +83,8 @@ def cria_produto_em_promocao():
             p = Produto.objects.create(
                 nome=f'Produto {num_p + 1}',
                 preco=random() * 10000,
-                sub_categoria=SubCategoria.objects.get(pk=randint(1, SubCategoria.objects.count() - 1)),
-                categoria=Categoria.objects.get(pk=randint(1, Categoria.objects.count() - 1)),
+                sub_categoria=SubCategoria.objects.get(pk=randint(1, SubCategoria.objects.all().count() - 1)),
+                categoria=Categoria.objects.get(pk=randint(1, Categoria.objects.all().count() - 1)),
                 promocao=True,
                 desconto=random() * 10000
             )
@@ -92,8 +92,15 @@ def cria_produto_em_promocao():
             print(e)
             continue
 
+        for num_carac in range(5):
+            carac = Caracteristica.objects.create(
+                nome=f'Caracteristica {num_carac + 1}',
+                descricao=f'Essa é a Caracteristica {num_carac + 1} muito boa',
+                produto=p
+            )
+
 
 if __name__ == '__main__':
-    #rop_all_data([Produto, Caracteristica, Categoria, SubCategoria])
+    #drop_all_data([Produto, Caracteristica, Categoria, SubCategoria])
     #cria_dados()
-    #cria_produto_em_promocao()
+    cria_produto_em_promocao()

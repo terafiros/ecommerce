@@ -1,0 +1,12 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ produto.nome }}</h5>
+        {% if produto.promocao %}
+            <p class="card-text">De <s>R$ {{ produto.preco }}</s></p>
+            <p class="card-text">Por R$ {{ produto.preco_promocao }}</p>
+        {% else %}
+            <p class="card-text">Por R$ {{ produto.preco }}</p>
+        {% endif %}
+        <a href="{{ produto.get_absolute_url }}" class="stretched-link"></a>
+    </div>
+</div>

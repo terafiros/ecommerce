@@ -4,17 +4,30 @@
     <!-- Detalhes do produto -->
     <div class="container">
         <h1>Produto {{ produto.nome }}</h1>
-        <div class="row mx-3 my-3 row-cols-1 row-cols-md-5 ">
-            <div class="col mb-3">
-                <div class="card" >
-                    <div class="card-body">
-                        <h5 class="card-title">{{ produto.nome }}</h5>
-                        <p class="card-text">{{ produto.descricao }}</p>
-                        <a href="#" class="btn btn-primary stretched-link">{{ produto.preco }}</a>
-                    </div>
-                </div>
+        <div class="row mx-3 mt-3">
+            <div class="col-9">
+                <img src="dasdsad" alt="" width="80%">
+            </div>
+            <div class="col">
+                <p>Detalhes do pagamento</p>
             </div>
         </div>
+
+        <div class="container mt-3">
+            <h1 class="ml-5">Caracteristicas</h1>
+            <ul class="list-group list-group-flush">
+                {% for caracteristica in produto.caracteristica_set.all %}
+                <li class="list-group-item  list-group-item-action"><p class="ml-5">{{ caracteristica.nome }}: {{ caracteristica.descricao }}</p></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="container">
+            <h1 class="ml-5">Produtos relacionados</h1>
+        </div>
+
+
+
     </div>
 {% endblock %}
 
