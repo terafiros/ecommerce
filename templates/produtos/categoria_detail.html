@@ -1,0 +1,34 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<!-- Detalhes da categoria -->
+<div class="container">
+    <h1>Categoria {{ categoria.nome }}</h1>
+    <div class="row mx-3 my-3 row-cols-1 row-cols-md-5 ">
+    {% for subcategoria in categoria.subcategoria_set.all %}
+        <div class="col mb-3">
+            <div class="card hoverble" >
+                <div class="card-body">
+                    <h5 class="card-title">{{ subcategoria.nome }}</h5>
+                    <p class="card-text">{{ subcategoria.descricao }}</p>
+                    <a href="{{ subcategoria.get_absolute_url }}" class="btn btn-primary stretched-link">Venha conferir</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <div class="row mx-3 my-3 row-cols-1 row-cols-md-5 ">
+    {% for produto in categoria.produto_set.all %}
+        <div class="col mb-3">
+            <div class="card hoverble" >
+                <div class="card-body">
+                    <h5 class="card-title">{{ produto.nome }}</h5>
+                    <p class="card-text">{{ produto.descricao }}</p>
+                    <a href="{{ produto.get_absolute_url }}" class="btn btn-primary stretched-link">{{ produto.preco }}</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

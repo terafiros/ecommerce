@@ -1,0 +1,61 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+
+    <!-- Categorias -->
+    <div class="container">
+        <h1>Seleção especial para você</h1>
+        <div class="row mx-3 my-3 row-cols-1 row-cols-md-4 ">
+        {% for categoria in categorias %}
+            <div class="col mb-3">
+                <div class="card rounded-pill text-center shadow" >
+                    <div class="card-body">
+                        <h5 class="card-title">{{ categoria.nome }}</h5>
+                        <p class="card-text">{{ categoria.descricao }}</p>
+                        <a href="{{ categoria.get_absolute_url }}" class="btn btn-primary stretched-link">Venha conferir</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
+    <!-- Produtos em promoção -->
+    <div class="container">
+        <h1>Produtos em Promoção</h1>
+        <div class="row mx-3 my-3 row-cols-1 row-cols-md-5 ">
+        {% for produto in produtos_em_promocao %}
+            <div class="col mb-3">
+                <div class="card hoverble" >
+                    <div class="card-body">
+                        <h5 class="card-title">{{ produto.nome }}</h5>
+                        <p class="card-text">{{ produto.descricao }}</p>
+                        <a href="{{ produto.get_absolute_url }}" class="btn btn-primary stretched-link">{{ produto.preco }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
+    <!-- Produtos em destaque -->
+    <div class="container">
+        <h1>Produtos em Destaque</h1>
+        <div class="row mx-3 my-3 row-cols-1 row-cols-md-5 ">
+        {% for produto in produtos_em_destaque %}
+            <div class="col mb-3">
+                <div class="card hoverble" >
+                    <div class="card-body">
+                        <h5 class="card-title">{{ produto.nome }}</h5>
+                        <p class="card-text">{{ produto.descricao }}</p>
+                        <a href="{{ produto.get_absolute_url }}" class="btn btn-primary stretched-link">{{ produto.preco }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
+
+
+{% endblock %}
