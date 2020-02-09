@@ -2,6 +2,7 @@
 Template de ecommerce criado com django.
 
 TODO
+    
     Home - banner
          - login
          - carrinho

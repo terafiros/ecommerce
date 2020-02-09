@@ -102,5 +102,5 @@ def cria_produto_em_promocao():
 
 if __name__ == '__main__':
     #drop_all_data([Produto, Caracteristica, Categoria, SubCategoria])
-    #cria_dados()
+    cria_dados()
     cria_produto_em_promocao()
