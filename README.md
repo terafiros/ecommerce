@@ -3,8 +3,7 @@ Template de ecommerce criado com django.
 
 TODO
     
-    Home - banner
-         - login
+    Home - banner         
          - carrinho
          - pesquisa
 
@@ -15,9 +14,7 @@ TODO
     Subcategoria - filtros
                  - rodapé
 
-    Produto - Produtos relacionados
-            - Caracteristicas layout
-            - detalhes do pagamento
+    Produto - detalhes do pagamento
 
     Pagamento - API
 

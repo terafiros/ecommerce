@@ -22,17 +22,24 @@ class SubCategoria(models.Model):
     def get_absolute_url(self):
         return reverse('subcategoria-detail', args=[str(self.id)])
 
+class CarrinhoCompras(models.Model):
+    pass
+
 class Produto(models.Model):
     nome = models.CharField(max_length=200, blank=False, null=False)
     preco = models.DecimalField(max_digits=6, decimal_places=2, blank=False, null=False, validators=[MinValueValidator(limit_value=0)])
     codigo_barras = models.CharField(max_length=30, blank=True, null=True)
     descricao = models.TextField(blank=True, null=True)
+    marca = models.CharField(max_length=30, blank=True, null=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, blank=True, null=True)
     sub_categoria = models.ForeignKey(SubCategoria, on_delete=models.CASCADE, blank=True, null=True)
 
     promocao = models.BooleanField(blank=True, null=True, default=False)
     desconto = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, default=0,
                                    validators=[MinValueValidator(limit_value=0)])
+    carrinho = models.ForeignKey(CarrinhoCompras, on_delete=models.CASCADE, blank=True, null=True)
+
+    imagem = models.ImageField(upload_to='produtos/imagens', blank=True, null=True, default='produtos/imagens/produto.png')
 
     def preco_promocao(self):
         return self.preco - self.desconto
@@ -68,3 +75,4 @@ class Caracteristica(models.Model):
     nome = models.CharField(max_length=200, blank=False, null=False)
     descricao = models.TextField(blank=False, null=False)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE, blank=False, null=False)
+
