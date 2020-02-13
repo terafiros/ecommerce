@@ -6,10 +6,24 @@
         <h1>Produto {{ produto.nome }}</h1>
         <div class="row mx-3 mt-3">
             <div class="col-9">
-                <img src="{{ produto.imagem.url }}" alt="" width="80%">
+                <img src="{{ produto.imagem.url }}" width="80%">
             </div>
             <div class="col">
-                <p>Detalhes do pagamento</p>
+                <h1>{{ produto.nome }}</h1>
+                {% if produto.promocao %}
+                    <h3>De <s> {{ produto.preco }} </s></h3>
+                    <h3>Por {{ produto.preco_promocao }}</h3>
+                {% else %}
+                    <h3>Por {{ produto.preco }}</h3>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    <a href="#"class="btn btn-primary">Comprar</a>
+                    <a id="add-carrinho" class="btn btn-primary">Adicionar ao carrinho</a>
+                {% else %}
+                    <a href="{% url 'login' %}?next={{ produto.get_absolute_url }}" class="btn btn-primary">Comprar</a>
+                    <a href="{% url 'login' %}?next={{ produto.get_absolute_url }}" class="btn btn-primary">Adicionar ao carrinho</a>
+                {% endif %}
             </div>
         </div>
 
@@ -49,6 +63,20 @@
         align-content: center;
     }
 </style>
+
+<script>
+    $('#add-carrinho').click(function(){
+        console.log("JQuery Running!");
+        $.ajax({
+            url:'{% url 'carrinho-add-produto' pk=produto.id%}',
+            dataType:'json',
+            success: function (data) {
+                console.log(data)
+            }
+        });
+    });
+
+</script>
 
 {% endblock %}
 

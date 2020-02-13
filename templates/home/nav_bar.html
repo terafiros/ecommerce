@@ -33,7 +33,7 @@
                         </a>
                     </li>
                     <li class="nav-item pr-3">
-                        <a href="#">
+                        <a href="{% url 'carrinho' %}">
                             <i class="fas fa-cart-plus"></i>
                             Carrinho
                         </a>
@@ -41,7 +41,7 @@
 
                     {% else %}
                     <li class="nav-item pr-3">
-                        <a href="{% url 'login' %}" class="float-right">
+                        <a href="{% url 'login' %}?next={% url 'home' %}" class="float-right">
                             <i class="fas fa-user"></i>
                             <p>Entre  </p>
                         </a>
