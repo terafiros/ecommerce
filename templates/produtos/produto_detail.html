@@ -19,7 +19,12 @@
 
                 {% if user.is_authenticated %}
                     <a href="#"class="btn btn-primary">Comprar</a>
-                    <a id="add-carrinho" class="btn btn-primary">Adicionar ao carrinho</a>
+                    {% if no_carrinho  %}
+                        <a id="btn-carrinho" class="btn btn-outline-primary" role="button">Remover do carrinho</a>
+                    {% else %}
+                        <a id="btn-carrinho" class="btn btn-outline-primary" role="button">Adicionar ao carrinho</a>
+                    {% endif %}
+
                 {% else %}
                     <a href="{% url 'login' %}?next={{ produto.get_absolute_url }}" class="btn btn-primary">Comprar</a>
                     <a href="{% url 'login' %}?next={{ produto.get_absolute_url }}" class="btn btn-primary">Adicionar ao carrinho</a>
@@ -27,6 +32,7 @@
             </div>
         </div>
 
+        <!-- Caracteristicas do produto -->
         <div class="container mt-3">
             <h1 class="ml-5">Caracteristicas</h1>
             <ul class="list-group list-group-flush">
@@ -65,13 +71,31 @@
 </style>
 
 <script>
-    $('#add-carrinho').click(function(){
-        console.log("JQuery Running!");
+    {% if no_carrinho %}
+    var url = '{% url 'carrinho-rm-produto' pk=produto.id %}';
+    {% else %}
+    var url = '{% url 'carrinho-add-produto' pk=produto.id %}';
+    {% endif %}
+
+    $('#btn-carrinho').click(function(){
+
         $.ajax({
-            url:'{% url 'carrinho-add-produto' pk=produto.id%}',
+            url: url,
             dataType:'json',
             success: function (data) {
-                console.log(data)
+                console.log(data['no_carrinho']);
+                if(data['no_carrinho']){
+                    $("#btn-carrinho").html("Remover do carrinho");
+                    url = '{% url 'carrinho-rm-produto' pk=produto.id %}';
+                    $("#badge").html(data['num_produtos']);
+                }
+                else{
+                    $("#btn-carrinho").html("Adicionar no carrinho");
+                    url = '{% url 'carrinho-add-produto' pk=produto.id %}';
+                    $("#badge").html(data['num_produtos']);
+                }
+
+
             }
         });
     });

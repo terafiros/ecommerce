@@ -35,7 +35,7 @@
                     <li class="nav-item pr-3">
                         <a href="{% url 'carrinho' %}">
                             <i class="fas fa-cart-plus"></i>
-                            Carrinho
+                            <span id="badge" class="badge badge-primary">{{ user.carrinho.produto_set.count }}</span>
                         </a>
                     </li>
 

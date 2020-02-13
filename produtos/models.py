@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
+from django.db.models import Sum
 from django.shortcuts import reverse
 
 
@@ -23,7 +24,9 @@ class SubCategoria(models.Model):
         return reverse('subcategoria-detail', args=[str(self.id)])
 
 class CarrinhoCompras(models.Model):
-    pass
+
+    def total(self):
+        return self.produto_set.all().aggregate(preco_total=Sum('preco') - Sum('desconto'))['preco_total']
 
 class Produto(models.Model):
     nome = models.CharField(max_length=200, blank=False, null=False)

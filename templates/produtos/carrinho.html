@@ -2,14 +2,64 @@
 
 {% block content %}
     <div class="container">
+    {% for produto in carrinho%}
+        <div class="row my-2" id="{{ produto.id }}">
+        <!-- imagem produto -->
+            <div class="col">
+                <a href="{{ produto.get_absolute_url }}" class="stretched-link">
+                    <img src="{{ produto.imagem.url }}" width="140em" alt="imagem produto">
+                </a>
+            </div>
+        <!-- dADOS produto -->
+            <div class="col justify-content-start">
+                {% if produto.promocao %}
+                    <p>{{ produto.nome }}</p>
+                    <p><s>R$ {{ produto.preco }}</s></p>
+                    <p>R$ {{ produto.preco_promocao }}</p>
+                {% else %}
+                    <p>R$ {{ produto.nome }}</p>
+                    <p>R$ {{ produto.preco }}</p>
+                {% endif %}
+
+            </div>
+        <!-- btn remover produto -->
+            <div class="col">
+                <a id="rm-carrinho" rm="{% url 'carrinho-rm-produto' pk=produto.id %}" class="rm btn btn-outline-primary" role="button">Remover do carrinho</a>
+            </div>
+        </div>
+
+    {% empty %}
+        <p id="sem-produtos">Sem produtos no carrinho.</p>
+    {% endfor %}
+        <p id="sem-produtos" hidden>Sem produtos no carrinho.</p>
     <div class="row">
-        <div class="col-9">
-
-        </div>
-        <div class="col">
-
-        </div>
+        <p>TOTAL: R$ </p><p id="total">{% if total %} {{ total }} {% else %} 0 {% endif %}</p>
+    </div>
     </div>
 
-    </div>
+    <script>
+        $('.rm').click(function(){
+            $.ajax({
+                url: $(this).attr("rm"),
+                dataType:'json',
+                success: function (data) {
+                    if(!data['no_carrinho']){
+                        $(data['id_removido']).hide();
+                        if(data['total']) {
+                            $('#total').html(data['total']);
+                            $("#badge").html(data['num_produtos']);
+                        }
+                        else{
+                            $('#total').html('0');
+                            $('#sem-produtos').attr('hidden', false)
+                            $("#badge").html(data['num_produtos']);
+                        }
+
+
+                    }
+                }
+            });
+        });
+    </script>
+
 {% endblock %}
